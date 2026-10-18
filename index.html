@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
@@ -98,12 +98,23 @@ html[lang=ur] input,html[lang=ur] textarea,html[lang=ur] select,html[lang=ur] bu
 .lgb,.logo small,input,textarea,select{font-family:"Plus Jakarta Sans","Noto Nastaliq Urdu",sans-serif}
 .pf{width:168px;height:168px;border-radius:50%;object-fit:cover;object-position:50% 30%;border:4px solid var(--gold);box-shadow:0 10px 30px rgba(0,0,0,.35);display:block;margin:0 auto 18px;background:#0a2a25}@media(min-width:760px){.pf{width:200px;height:200px}}
 </style>
+<style>
+.design-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px}
+@media(min-width:600px){.design-gallery{grid-template-columns:repeat(3,1fr)}}
+.design-placeholder{background:var(--card);border:2px dashed var(--gold);border-radius:16px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:transform .2s,box-shadow .2s;gap:8px}
+.design-placeholder:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(184,146,58,.2);border-style:solid}
+.design-placeholder span{font-size:48px}
+.design-placeholder p{color:var(--mu);font-size:14px;margin:0;text-align:center}
+.design-img{width:100%;height:100%;object-fit:cover;border-radius:14px;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.design-img:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.design-item{border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:var(--card);border:1px solid var(--ln)}
+</style>
 </head>
 <body>
 <header><div class="wrap bar">
 <a class="logo" href="#home"><span data-u="عبدالقادر ہزاروی">AbdulQadar</span><small data-u="AbdulQadar">عبدالقادر ہزاروی</small></a>
 <button id="lg" class="lgb" type="button">اردو</button><button id="mb" aria-label="Menu" aria-expanded="false">☰</button>
-<nav id="nav" aria-label="Main menu"><a href="#home"><span data-u="ہوم">Home</span></a><a href="#courses"><span data-u="کورسز">Courses</span></a><a href="#admissions"><span data-u="داخلہ">Admissions</span></a><a href="#about"><span data-u="تعارف">About</span></a><a href="#resources"><span data-u="مواد">Resources</span></a><a href="#contact"><span data-u="رابطہ">Contact</span></a></nav>
+<nav id="nav" aria-label="Main menu"><a href="#home"><span data-u="ہوم">Home</span></a><a href="#courses"><span data-u="کورسز">Courses</span></a><a href="#admissions"><span data-u="داخلہ">Admissions</span></a><a href="#about"><span data-u="تعارف">About</span></a><a href="#resources"><span data-u="مواد">Resources</span></a><a href="#contact"><span data-u="رابطہ">Contact</span></a><a href="#designs"><span data-u="ڈیزائن">Designs</span></a></nav>
 </div></header>
 
 <main>
@@ -136,6 +147,93 @@ html[lang=ur] input,html[lang=ur] textarea,html[lang=ur] select,html[lang=ur] bu
 <p style="margin-top:18px"><a class="btn p" data-link="yt" href="#contact"><span data-u="YouTube چینل">YouTube channel</span></a></p></div></section></div>
 
 <div class="page" id="contact" hidden><div class="ph"><div class="wrap"><h1><span data-u="رابطہ">Contact</span></h1></div></div><section class="blk"><div class="wrap"><p><span data-u="رابطے کا بہترین ذریعہ WhatsApp ہے۔">WhatsApp is the best way to reach me.</span></p><a class="btn p" data-wa href="#contact"><span data-u="WhatsApp پر رابطہ کریں">Contact on WhatsApp</span></a><p style="margin-top:18px"><span data-u="سوشل میڈیا:">Social media:</span> <a data-link="fb" href="#contact"><b>Facebook</b></a> <a data-link="tt" href="#contact"><b>TikTok</b></a> <a data-link="yt" href="#contact"><b>YouTube</b></a> <a data-link="ch" href="#contact"><b><span data-u="WhatsApp چینل">WhatsApp Channel</span></b></a></p><p><a class="chip" href="#admissions"><span data-u="کورس کے لیے فارم">Course enquiry form</span></a></p></div></section></div>
+
+<!-- ===== GRAPHIC DESIGN SERVICES SECTION ===== -->
+<div class="page" id="designs">
+<section class="blk">
+<div class="wrap">
+
+<h2 data-u="گرافک ڈیزائننگ سروسز">Graphic Design Services</h2>
+<p class="sub" data-u="پیشہ ورانہ ڈیزائن جو آپ کے برانڈ کو نمایاں کرے">Professional designs that make your brand stand out</p>
+
+<!-- Services Cards -->
+<div class="grid g3" style="margin-bottom:40px;">
+  <div class="card" style="text-align:center;">
+    <div style="font-size:36px;margin-bottom:10px;">🎨</div>
+    <h3 data-u="لوگو ڈیزائن">Logo Design</h3>
+    <p data-u="آپ کے برانڈ کے لیے منفرد اور یادگار لوگو">Unique & memorable logos for your brand</p>
+  </div>
+  <div class="card" style="text-align:center;">
+    <div style="font-size:36px;margin-bottom:10px;">📱</div>
+    <h3 data-u="سوشل میڈیا پوسٹس">Social Media Posts</h3>
+    <p data-u="فیس بک، انسٹاگرام اور یوٹیوب کے لیے پروفیشنل ڈیزائن">Professional designs for Facebook, Instagram & YouTube</p>
+  </div>
+  <div class="card" style="text-align:center;">
+    <div style="font-size:36px;margin-bottom:10px;">📄</div>
+    <h3 data-u="فلائر اور بینر">Flyer & Banner</h3>
+    <p data-u="تقریبات اور اشتہارات کے لیے خوبصورت ڈیزائن">Beautiful designs for events & advertisements</p>
+  </div>
+  <div class="card" style="text-align:center;">
+    <div style="font-size:36px;margin-bottom:10px;">🖼️</div>
+    <h3 data-u="تھمب نیل ڈیزائن">Thumbnail Design</h3>
+    <p data-u="یوٹیوب اور سوشل میڈیا کے لیے کلک کرنے والے تھمب نیل">Eye-catching thumbnails for YouTube & social media</p>
+  </div>
+  <div class="card" style="text-align:center;">
+    <div style="font-size:36px;margin-bottom:10px;">📊</div>
+    <h3 data-u="پریزنٹیشن ڈیزائن">Presentation Design</h3>
+    <p data-u="پیشہ ورانہ پاورپوائنٹ اور سلائڈز">Professional PowerPoint & slides design</p>
+  </div>
+  <div class="card" style="text-align:center;">
+    <div style="font-size:36px;margin-bottom:10px;">🏷️</div>
+    <h3 data-u="برانڈنگ">Branding</h3>
+    <p data-u="مکمل برانڈ آئیڈینٹی پیکج">Complete brand identity package</p>
+  </div>
+</div>
+
+<!-- Portfolio Gallery -->
+<h2 style="margin-bottom:8px;" data-u="میرے ڈیزائن سیمپلز">My Design Samples</h2>
+<p class="sub" data-u="میرے تازہ ترین کام کا نمونہ">A glimpse of my latest work</p>
+
+<div class="design-gallery" id="designGallery">
+  <!-- Design images will be loaded here -->
+  <div class="design-placeholder" onclick="document.getElementById('designModal').style.display='flex'">
+    <span>🖼️</span>
+    <p data-u="ڈیزائن سیمپل ۱">Design Sample 1</p>
+  </div>
+  <div class="design-placeholder" onclick="document.getElementById('designModal').style.display='flex'">
+    <span>🖼️</span>
+    <p data-u="ڈیزائن سیمپل ۲">Design Sample 2</p>
+  </div>
+  <div class="design-placeholder" onclick="document.getElementById('designModal').style.display='flex'">
+    <span>🖼️</span>
+    <p data-u="ڈیزائن سیمپل ۳">Design Sample 3</p>
+  </div>
+  <div class="design-placeholder" onclick="document.getElementById('designModal').style.display='flex'">
+    <span>🖼️</span>
+    <p data-u="ڈیزائن سیمپل ۴">Design Sample 4</p>
+  </div>
+  <div class="design-placeholder" onclick="document.getElementById('designModal').style.display='flex'">
+    <span>🖼️</span>
+    <p data-u="ڈیزائن سیمپل ۵">Design Sample 5</p>
+  </div>
+  <div class="design-placeholder" onclick="document.getElementById('designModal').style.display='flex'">
+    <span>🖼️</span>
+    <p data-u="ڈیزائن سیمپل ۶">Design Sample 6</p>
+  </div>
+</div>
+
+<!-- WhatsApp CTA -->
+<div class="cta" style="margin-top:32px;">
+  <h2 data-u="ڈیزائن کروانا ہے؟">Need a Design?</h2>
+  <p data-u="واٹس ایپ پر رابطہ کریں اور اپنا پراجیکٹ شروع کریں">Contact on WhatsApp and start your project today</p>
+  <a class="btn p" href="https://wa.me/+923001234567?text=Assalamu%20Alaikum%2C%20I%20need%20graphic%20design%20services" target="_blank" rel="noopener" style="margin-top:14px;display:inline-block;" data-u="واٹس ایپ پر آرڈر کریں">📱 Order on WhatsApp</a>
+</div>
+
+</div>
+</section>
+</div>
+<!-- ===== END GRAPHIC DESIGN SECTION ===== -->
+
 </main>
 
 <footer><div class="wrap"><div class="social-links" style="margin-top:16px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
@@ -178,5 +276,6 @@ try{if(localStorage.getItem("lang")=="ur")setLang("ur")}catch(x){}
 </script>
 </body>
 </html>
+
 
 
