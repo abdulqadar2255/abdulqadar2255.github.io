@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ایڈمن پینل — AbdulQadar</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Nastaliq Urdu","Plus Jakarta Sans",sans-serif;background:#0E3B34;color:#fff;min-height:100vh;direction:rtl}
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.login-box{background:#12302a;border:2px solid #B8923A;border-radius:20px;padding:36px 28px;width:100%;max-width:400px;text-align:center}
+.login-box h1{color:#B8923A;font-size:24px;margin-bottom:8px}
+.login-box p{color:#a9b8b3;font-size:14px;margin-bottom:28px}
+.field{margin-bottom:16px;text-align:right}
+.field label{display:block;font-size:15px;color:#B8923A;margin-bottom:6px}
+.field input,.field textarea,.field select{width:100%;padding:12px 14px;border:1px solid #25463f;border-radius:10px;background:#0b1a17;color:#fff;font:inherit;font-size:15px;line-height:2}
+.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid #B8923A;border-color:#B8923A}
+.btn-gold{background:#B8923A;color:#1a1405;border:none;padding:14px 28px;border-radius:10px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;width:100%;margin-top:8px;transition:opacity .2s}
+.btn-gold:hover{opacity:.85}
+.btn-red{background:#c0392b;color:#fff;border:none;padding:8px 16px;border-radius:8px;font:inherit;font-size:14px;cursor:pointer}
+.btn-green{background:#27ae60;color:#fff;border:none;padding:8px 16px;border-radius:8px;font:inherit;font-size:14px;cursor:pointer}
+.admin-wrap{display:none;padding:20px;max-width:800px;margin:auto}
+.admin-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#12302a;border-bottom:3px solid #B8923A;position:sticky;top:0;z-index:10;margin:-20px -20px 24px}
+.admin-header h2{color:#B8923A;font-size:20px}
+.logout-btn{background:transparent;border:1px solid #B8923A;color:#B8923A;padding:8px 16px;border-radius:8px;cursor:pointer;font:inherit;font-size:14px}
+.section-box{background:#12302a;border-radius:16px;padding:24px;margin-bottom:24px;border:1px solid #25463f}
+.section-box h3{color:#B8923A;font-size:18px;margin-bottom:20px;border-bottom:1px solid #25463f;padding-bottom:12px}
+.char-count{font-size:12px;color:#a9b8b3;text-align:left;margin-top:4px}
+.msg{padding:12px 16px;border-radius:10px;margin-bottom:16px;font-size:15px;display:none}
+.msg.ok{background:#1a4a2e;border:1px solid #27ae60;color:#2ecc71}
+.msg.err{background:#4a1a1a;border:1px solid #c0392b;color:#e74c3c}
+.articles-list{display:grid;gap:12px}
+.art-card{background:#0b1a17;border:1px solid #25463f;border-radius:12px;padding:16px;border-right:4px solid #B8923A}
+.art-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.art-title{font-size:16px;font-weight:600;color:#fff;flex:1}
+.art-meta{font-size:13px;color:#a9b8b3;margin-top:6px}
+.art-actions{display:flex;gap:8px;flex-shrink:0}
+.spinner{display:none;width:20px;height:20px;border:2px solid #fff3;border-top-color:#B8923A;border-radius:50%;animation:spin .7s linear infinite;margin:auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty-state{text-align:center;color:#a9b8b3;padding:40px 20px}
+.empty-state span{font-size:48px;display:block;margin-bottom:12px}
+.stats-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.stat-box{background:#12302a;border:1px solid #25463f;border-radius:12px;padding:16px 20px;flex:1;min-width:120px;text-align:center}
+.stat-num{font-size:32px;font-weight:700;color:#B8923A}
+.stat-lbl{font-size:13px;color:#a9b8b3;margin-top:4px}
+@media(max-width:600px){.admin-header{flex-direction:column;gap:10px;text-align:center}.art-card-top{flex-direction:column}.art-actions{align-self:flex-start}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div style="font-size:48px;margin-bottom:12px">🔐</div>
+    <h1>ایڈمن پینل</h1>
+    <p>عبدالقادر ہزاروی — ویب سائٹ کنٹرول پینل</p>
+    <div class="msg" id="loginMsg"></div>
+    <div class="field">
+      <label>پاس ورڈ</label>
+      <input type="password" id="pwd" placeholder="پاس ورڈ درج کریں" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="field">
+      <label>GitHub Token</label>
+      <input type="password" id="tkn" placeholder="ghp_..." onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn-gold" onclick="doLogin()">لاگ ان کریں</button>
+    <p style="font-size:12px;color:#a9b8b3;margin-top:16px">Token محفوظ نہیں ہوتا — ہر بار درج کریں</p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-wrap" id="adminWrap">
+  <div class="admin-header">
+    <h2>🖊️ مضامین کنٹرول پینل</h2>
+    <button class="logout-btn" onclick="doLogout()">لاگ آؤٹ</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row" id="statsRow">
+    <div class="stat-box"><div class="stat-num" id="statTotal">0</div><div class="stat-lbl">کل مضامین</div></div>
+    <div class="stat-box"><div class="stat-num" id="statToday">0</div><div class="stat-lbl">آج شائع</div></div>
+    <div class="stat-box"><div class="stat-num">🌐</div><div class="stat-lbl"><a href="https://abdulqadar2255.github.io/#mazameen" target="_blank" style="color:#B8923A">ویب سائٹ دیکھیں</a></div></div>
+  </div>
+
+  <!-- New Article Form -->
+  <div class="section-box">
+    <h3>✏️ نیا مضمون لکھیں</h3>
+    <div class="msg" id="pubMsg"></div>
+    <div class="field">
+      <label>عنوان (Title) *</label>
+      <input type="text" id="artTitle" placeholder="مضمون کا عنوان لکھیں..." maxlength="150" oninput="updateCount(this,'tc')">
+      <div class="char-count"><span id="tc">0</span>/150</div>
+    </div>
+    <div class="field">
+      <label>قسم (Category)</label>
+      <select id="artCat">
+        <option value="اسلامی تعلیم">اسلامی تعلیم</option>
+        <option value="AI مہارتیں">AI مہارتیں</option>
+        <option value="استاد کی تربیت">استاد کی تربیت</option>
+        <option value="گرافک ڈیزائن">گرافک ڈیزائن</option>
+        <option value="عمومی">عمومی</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>خلاصہ (Summary) — ٹکر میں نظر آئے گا</label>
+      <input type="text" id="artSummary" placeholder="2-3 جملوں میں خلاصہ..." maxlength="200" oninput="updateCount(this,'sc')">
+      <div class="char-count"><span id="sc">0</span>/200</div>
+    </div>
+    <div class="field">
+      <label>مکمل مضمون *</label>
+      <textarea id="artContent" rows="10" placeholder="یہاں مضمون لکھیں یا پیسٹ کریں..." oninput="updateCount(this,'cc')"></textarea>
+      <div class="char-count"><span id="cc">0</span> حروف</div>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <button class="btn-gold" onclick="publishArticle()" id="pubBtn">🚀 شائع کریں</button>
+      <div class="spinner" id="pubSpinner"></div>
+      <button onclick="clearForm()" style="background:transparent;border:1px solid #25463f;color:#a9b8b3;padding:12px 20px;border-radius:10px;cursor:pointer;font:inherit">صاف کریں</button>
+    </div>
+  </div>
+
+  <!-- Articles List -->
+  <div class="section-box">
+    <h3>📋 شائع شدہ مضامین</h3>
+    <div id="artList"><div class="empty-state"><span>⏳</span>لوڈ ہو رہا ہے...</div></div>
+  </div>
+</div>
+
+<script>
+const REPO = 'abdulqadar2255/abdulqadar2255.github.io';
+const ADMIN_PASS = 'abdulqadar786';
+let GH_TOKEN = '';
+
+function showMsg(id, msg, type){
+  var el = document.getElementById(id);
+  el.textContent = msg; el.className = 'msg ' + type; el.style.display = 'block';
+  if(type === 'ok') setTimeout(function(){el.style.display='none'}, 5000);
+}
+
+function updateCount(el, id){
+  document.getElementById(id).textContent = el.value.length;
+}
+
+function doLogin(){
+  var p = document.getElementById('pwd').value;
+  var t = document.getElementById('tkn').value;
+  if(p !== ADMIN_PASS){ showMsg('loginMsg','❌ پاس ورڈ غلط ہے', 'err'); return; }
+  if(!t.startsWith('ghp_') && !t.startsWith('github_pat_')){ showMsg('loginMsg','❌ GitHub Token درست نہیں', 'err'); return; }
+  GH_TOKEN = t;
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('adminWrap').style.display = 'block';
+  loadArticles();
+}
+
+function doLogout(){
+  GH_TOKEN = ''; location.reload();
+}
+
+async function ghGet(path){
+  var r = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+path, {
+    headers:{'Authorization':'token '+GH_TOKEN,'Accept':'application/vnd.github+json','User-Agent':'AdminPanel'}
+  });
+  return r.json();
+}
+
+async function ghPut(path, content, sha, msg){
+  var body = {message:msg, content:btoa(unescape(encodeURIComponent(content)))};
+  if(sha) body.sha = sha;
+  var r = await fetch('https://api.github.com/repos/'+REPO+'/contents/'+path, {
+    method:'PUT',
+    headers:{'Authorization':'token '+GH_TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json','User-Agent':'AdminPanel'},
+    body: JSON.stringify(body)
+  });
+  return r.json();
+}
+
+async function loadArticles(){
+  try{
+    var data = await ghGet('articles.json');
+    var json = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))));
+    var arts = json.articles || [];
+    document.getElementById('statTotal').textContent = arts.length;
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById('statToday').textContent = arts.filter(function(a){return a.date===today}).length;
+    renderList(arts);
+  } catch(e){ document.getElementById('artList').innerHTML='<div class="empty-state"><span>⚠️</span>لوڈ نہیں ہو سکا</div>'; }
+}
+
+function renderList(arts){
+  if(!arts.length){
+    document.getElementById('artList').innerHTML='<div class="empty-state"><span>📝</span>ابھی کوئی مضمون نہیں</div>';
+    return;
+  }
+  var html = '<div class="articles-list">';
+  arts.slice().reverse().forEach(function(a){
+    html += '<div class="art-card"><div class="art-card-top"><div><div class="art-title">'+escHtml(a.title)+'</div><div class="art-meta">📂 '+escHtml(a.category)+' &nbsp;|&nbsp; 📅 '+escHtml(a.date)+'</div></div><div class="art-actions"><button class="btn-red" onclick="deleteArticle(\''+a.id+'\')">🗑️ حذف</button></div></div></div>';
+  });
+  html += '</div>';
+  document.getElementById('artList').innerHTML = html;
+}
+
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+async function publishArticle(){
+  var title = document.getElementById('artTitle').value.trim();
+  var cat = document.getElementById('artCat').value;
+  var summary = document.getElementById('artSummary').value.trim();
+  var content = document.getElementById('artContent').value.trim();
+  if(!title){ showMsg('pubMsg','❌ عنوان ضروری ہے', 'err'); return; }
+  if(!content){ showMsg('pubMsg','❌ مضمون کا متن ضروری ہے', 'err'); return; }
+
+  document.getElementById('pubBtn').disabled = true;
+  document.getElementById('pubSpinner').style.display = 'block';
+
+  try{
+    var fileData = await ghGet('articles.json');
+    var sha = fileData.sha;
+    var json = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,'')))));
+    var arts = json.articles || [];
+    var newArt = {
+      id: 'art-' + Date.now(),
+      title: title,
+      category: cat,
+      date: new Date().toISOString().split('T')[0],
+      summary: summary || title,
+      content: content
+    };
+    arts.unshift(newArt);
+    json.articles = arts;
+    var result = await ghPut('articles.json', JSON.stringify(json, null, 2), sha, 'نیا مضمون: ' + title);
+    if(result.commit){
+      showMsg('pubMsg','✅ مضمون کامیابی سے شائع ہو گیا! ویب سائٹ 1-2 منٹ میں اپڈیٹ ہو جائے گی۔', 'ok');
+      clearForm();
+      loadArticles();
+    } else {
+      showMsg('pubMsg','❌ خطا: ' + (result.message||'نامعلوم'), 'err');
+    }
+  } catch(e){ showMsg('pubMsg','❌ خطا: ' + e.message, 'err'); }
+
+  document.getElementById('pubBtn').disabled = false;
+  document.getElementById('pubSpinner').style.display = 'none';
+}
+
+async function deleteArticle(id){
+  if(!confirm('کیا آپ واقعی یہ مضمون حذف کرنا چاہتے ہیں؟')) return;
+  try{
+    var fileData = await ghGet('articles.json');
+    var sha = fileData.sha;
+    var json = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,'')))));
+    json.articles = (json.articles||[]).filter(function(a){return a.id !== id});
+    await ghPut('articles.json', JSON.stringify(json,null,2), sha, 'مضمون حذف: '+id);
+    loadArticles();
+  } catch(e){ alert('حذف نہیں ہو سکا: '+e.message); }
+}
+
+function clearForm(){
+  document.getElementById('artTitle').value='';
+  document.getElementById('artSummary').value='';
+  document.getElementById('artContent').value='';
+  document.getElementById('tc').textContent='0';
+  document.getElementById('sc').textContent='0';
+  document.getElementById('cc').textContent='0';
+}
+</script>
+</body>
+</html>

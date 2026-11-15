@@ -109,12 +109,57 @@ html[lang=ur] input,html[lang=ur] textarea,html[lang=ur] select,html[lang=ur] bu
 .design-img:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .design-item{border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:var(--card);border:1px solid var(--ln)}
 </style>
+<style>
+/* ===== LIVE TICKER ===== */
+.ticker-wrap{background:#B8923A;color:#1a1405;overflow:hidden;white-space:nowrap;position:relative;z-index:8;border-bottom:2px solid #8a6d2a}
+.ticker-label{display:inline-block;background:#0E3B34;color:#B8923A;padding:8px 16px;font-weight:700;font-size:14px;vertical-align:middle;border-left:3px solid #B8923A}
+.ticker-track{display:inline-block;animation:ticker 30s linear infinite;padding:8px 0;font-size:14px;font-weight:600}
+.ticker-track:hover{animation-play-state:paused}
+.ticker-item{display:inline-block;padding:0 40px}
+.ticker-item::before{content:"◆ ";color:#0E3B34;opacity:.6}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ===== ARTICLES SECTION ===== */
+.art-grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:600px){.art-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:900px){.art-grid{grid-template-columns:repeat(3,1fr)}}
+.art-item{background:var(--card);border:1px solid var(--ln);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
+.art-item:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(184,146,58,.15)}
+.art-item-top{background:var(--g);color:#fff;padding:14px 16px;border-bottom:3px solid var(--gold)}
+.art-item-cat{font-size:12px;color:var(--gold);font-weight:600;margin-bottom:4px}
+.art-item-title{font-size:17px;font-weight:700;line-height:1.6}
+.art-item-body{padding:14px 16px;flex:1}
+.art-item-summary{color:var(--mu);font-size:15px;line-height:1.9;margin:0}
+.art-item-date{font-size:12px;color:var(--mu);margin-top:10px;text-align:left}
+.art-item-btn{display:block;text-align:center;padding:10px;background:var(--bg);color:var(--gold);font-size:14px;font-weight:600;border-top:1px solid var(--ln)}
+.art-item-btn:hover{background:var(--gold);color:#fff}
+
+/* ===== ARTICLE MODAL ===== */
+.art-modal{display:none;position:fixed;inset:0;z-index:999;background:#000a;overflow-y:auto;padding:20px}
+.art-modal.open{display:flex;align-items:flex-start;justify-content:center}
+.art-modal-box{background:var(--card);border-radius:16px;max-width:720px;width:100%;margin:auto;overflow:hidden;position:relative}
+.art-modal-header{background:var(--g);color:#fff;padding:20px 24px;border-bottom:3px solid var(--gold)}
+.art-modal-cat{font-size:13px;color:var(--gold);margin-bottom:6px}
+.art-modal-title{font-size:22px;font-weight:700;line-height:1.6}
+.art-modal-close{position:absolute;top:14px;left:14px;background:transparent;border:1px solid #fff5;color:#fff;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.art-modal-body{padding:24px;line-height:2.2;font-size:16px;white-space:pre-wrap;direction:rtl;text-align:right}
+.art-modal-date{font-size:13px;color:var(--mu);text-align:left;padding:0 24px 20px}
+.art-loading{text-align:center;padding:60px;color:var(--mu)}
+</style>
 </head>
 <body>
+
+<!-- ===== LIVE NEWS TICKER ===== -->
+<div class="ticker-wrap" id="tickerWrap" style="display:none">
+  <span class="ticker-label">📰 تازہ مضامین</span>
+  <div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item">مضامین لوڈ ہو رہے ہیں...</span>
+  </div>
+</div>
 <header><div class="wrap bar">
 <a class="logo" href="#home"><span data-u="عبدالقادر ہزاروی">AbdulQadar</span><small data-u="AbdulQadar">عبدالقادر ہزاروی</small></a>
 <button id="lg" class="lgb" type="button">اردو</button><button id="mb" aria-label="Menu" aria-expanded="false">☰</button>
-<nav id="nav" aria-label="Main menu"><a href="#home"><span data-u="ہوم">Home</span></a><a href="#courses"><span data-u="کورسز">Courses</span></a><a href="#admissions"><span data-u="داخلہ">Admissions</span></a><a href="#about"><span data-u="تعارف">About</span></a><a href="#resources"><span data-u="مواد">Resources</span></a><a href="#contact"><span data-u="رابطہ">Contact</span></a><a href="#designs"><span data-u="ڈیزائن">Designs</span></a></nav>
+<nav id="nav" aria-label="Main menu"><a href="#home"><span data-u="ہوم">Home</span></a><a href="#courses"><span data-u="کورسز">Courses</span></a><a href="#admissions"><span data-u="داخلہ">Admissions</span></a><a href="#about"><span data-u="تعارف">About</span></a><a href="#resources"><span data-u="مواد">Resources</span></a><a href="#contact"><span data-u="رابطہ">Contact</span></a><a href="#designs"><span data-u="ڈیزائن">Designs</span></a><a href="#mazameen"><span data-u="مضامین">مضامین</span></a></nav>
 </div></header>
 
 <main>
@@ -234,6 +279,37 @@ html[lang=ur] input,html[lang=ur] textarea,html[lang=ur] select,html[lang=ur] bu
 </div>
 <!-- ===== END GRAPHIC DESIGN SECTION ===== -->
 
+
+<!-- ===== ARTICLES / MAZAMEEN SECTION ===== -->
+<div class="page" id="mazameen">
+<section class="blk">
+<div class="wrap">
+  <h2 data-u="مضامین و تحریریں">Articles & Writings</h2>
+  <p class="sub" data-u="علمی و دینی مضامین پڑھیں">Read Islamic & educational articles</p>
+  <div id="artGrid" class="art-grid">
+    <div class="art-loading">⏳ مضامین لوڈ ہو رہے ہیں...</div>
+  </div>
+  <div style="text-align:center;margin-top:28px">
+    <a href="#contact" class="btn s" style="border-color:var(--gold);color:var(--g);" data-u="مزید مضامین">مزید جلد آ رہے ہیں ⬇️</a>
+  </div>
+</div>
+</section>
+</div>
+
+<!-- Article Detail Modal -->
+<div class="art-modal" id="artModal" onclick="if(event.target===this)closeModal()">
+  <div class="art-modal-box">
+    <button class="art-modal-close" onclick="closeModal()">✕</button>
+    <div class="art-modal-header">
+      <div class="art-modal-cat" id="modalCat"></div>
+      <div class="art-modal-title" id="modalTitle"></div>
+    </div>
+    <div class="art-modal-body" id="modalBody"></div>
+    <div class="art-modal-date" id="modalDate"></div>
+  </div>
+</div>
+<!-- ===== END ARTICLES SECTION ===== -->
+
 </main>
 
 <footer><div class="wrap"><div class="social-links" style="margin-top:16px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
@@ -244,7 +320,7 @@ html[lang=ur] input,html[lang=ur] textarea,html[lang=ur] select,html[lang=ur] bu
 <a href="https://youtube.com/@abdulqadar2255" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube" style="display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:#FF0000;color:#fff;transition:transform .2s,opacity .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.opacity='0.9'" onmouseout="this.style.transform='translateY(0)';this.style.opacity='1'"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
 <a href="https://www.linkedin.com/in/abdul-qadar-59a78a134" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn" style="display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:#0A66C2;color:#fff;transition:transform .2s,opacity .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.opacity='0.9'" onmouseout="this.style.transform='translateY(0)';this.style.opacity='1'"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
 <a href="https://x.com/Abdulqadirh111" target="_blank" rel="noopener" aria-label="Twitter/X" title="Twitter/X" style="display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:#000;color:#fff;transition:transform .2s,opacity .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.opacity='0.9'" onmouseout="this.style.transform='translateY(0)';this.style.opacity='1'"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.265 5.638 5.9-5.638zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-</div><b data-u="عبدالقادر ہزاروی">AbdulQadar</b><br><span data-u="اسلامی تعلیم، AI مہارتیں اور اساتذہ کی تربیت">Islamic education, AI skills and teacher training</span><br><a href="#courses"><span data-u="کورسز">Courses</span></a><a href="#admissions"><span data-u="داخلہ">Admissions</span></a><a href="#about"><span data-u="تعارف">About</span></a><a href="#resources"><span data-u="مواد">Resources</span></a><a href="#contact"><span data-u="رابطہ">Contact</span></a></div></footer>
+</div><b data-u="عبدالقادر ہزاروی">AbdulQadar</b><br><span data-u="اسلامی تعلیم، AI مہارتیں اور اساتذہ کی تربیت">Islamic education, AI skills and teacher training</span><br><a href="#courses"><span data-u="کورسز">Courses</span></a><a href="#admissions"><span data-u="داخلہ">Admissions</span></a><a href="#about"><span data-u="تعارف">About</span></a><a href="#resources"><span data-u="مواد">Resources</span></a><a href="#contact"><span data-u="رابطہ">Contact</span></a><a href="#mazameen"><span data-u="مضامین">مضامین</span></a></div></footer>
 <a class="wa" data-wa href="#contact">WhatsApp</a>
 
 <script>
@@ -273,9 +349,73 @@ lg.textContent=l=="ur"?"English":"اردو";document.title=l=="ur"?"عبدالق
 try{localStorage.setItem("lang",l)}catch(x){}}
 lg.onclick=function(){setLang(document.documentElement.lang=="ur"?"en":"ur")};
 try{if(localStorage.getItem("lang")=="ur")setLang("ur")}catch(x){}
+
+// ===== ARTICLES SYSTEM =====
+var ARTICLES_URL = 'https://raw.githubusercontent.com/abdulqadar2255/abdulqadar2255.github.io/main/articles.json?t=' + Date.now();
+var allArticles = [];
+
+function loadArticles(){
+  fetch(ARTICLES_URL)
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      allArticles = data.articles || [];
+      renderArticles();
+      renderTicker();
+    })
+    .catch(function(){ document.getElementById('artGrid').innerHTML='<div class="art-loading">⚠️ مضامین لوڈ نہیں ہو سکے</div>'; });
+}
+
+function renderArticles(){
+  var grid = document.getElementById('artGrid');
+  if(!allArticles.length){ grid.innerHTML='<div class="art-loading">📝 جلد مضامین شائع ہوں گے</div>'; return; }
+  grid.innerHTML = allArticles.map(function(a,i){
+    return '<div class="art-item" onclick="openArticle('+i+')">' +
+      '<div class="art-item-top"><div class="art-item-cat">📂 '+escH(a.category)+'</div><div class="art-item-title">'+escH(a.title)+'</div></div>' +
+      '<div class="art-item-body"><p class="art-item-summary">'+escH(a.summary||'')+'</p><div class="art-item-date">'+escH(a.date)+'</div></div>' +
+      '<span class="art-item-btn">مکمل پڑھیں ←</span></div>';
+  }).join('');
+}
+
+function renderTicker(){
+  if(!allArticles.length) return;
+  var items = allArticles.map(function(a){ return '<span class="ticker-item">'+escH(a.title)+'</span>'; }).join('');
+  var track = document.getElementById('tickerTrack');
+  track.innerHTML = items + items; // duplicate for seamless loop
+  document.getElementById('tickerWrap').style.display='block';
+  // Adjust animation speed based on content length
+  var speed = Math.max(20, allArticles.length * 8);
+  track.style.animationDuration = speed + 's';
+}
+
+function openArticle(i){
+  var a = allArticles[i];
+  if(!a) return;
+  document.getElementById('modalCat').textContent = '📂 ' + a.category;
+  document.getElementById('modalTitle').textContent = a.title;
+  document.getElementById('modalBody').textContent = a.content;
+  document.getElementById('modalDate').textContent = '📅 ' + a.date;
+  document.getElementById('artModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  document.getElementById('artModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
+
+function escH(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// Load articles on page load
+loadArticles();
+// Auto-refresh every 5 minutes
+setInterval(loadArticles, 300000);
+// ===== END ARTICLES SYSTEM =====
 </script>
 </body>
 </html>
+
 
 
 
